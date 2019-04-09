@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
 
@@ -35,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new MessageFragment()).commit();
-            setTitle("Message");
-            navigationView.setCheckedItem(R.id.nav_message);
+            setTitle("Home");
+            navigationView.setCheckedItem(R.id.nav_home);
         }
 
     }
@@ -44,27 +45,52 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
        switch (menuItem.getItemId()){
-           case R.id.nav_message:
+           case R.id.nav_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new MessageFragment()).commit();
-               setTitle("Message");
-               break;
-           case R.id.nav_chat:
-               getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                       new ChatFragment()).commit();
-               setTitle("Chat");
+               setTitle("Home");
                break;
            case R.id.nav_profile:
                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                        new ProfileFragment()).commit();
                setTitle("Profile");
                break;
+           case R.id.nav_mywishlist:
+               getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                       new ProfileFragment()).commit();
+               setTitle("My Wish List");
+               break;
+           case R.id.nav_chat:
+               getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                       new ChatFragment()).commit();
+               setTitle("Chat");
+               break;
+           case R.id.nav_cart:
+               getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                       new ProfileFragment()).commit();
+               setTitle("My Cart");
+               break;
+           case R.id.nav_myorder:
+               getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                       new ProfileFragment()).commit();
+               setTitle("My Order");
+               break;
+           case R.id.nav_myaddress:
+               getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                       new ProfileFragment()).commit();
+               setTitle("My Address");
+               break;
+
            case R.id.nav_share:
                Toast.makeText(this,"Share",Toast.LENGTH_SHORT).show();
             break;
                case R.id.nav_send:
                Toast.makeText(this,"",Toast.LENGTH_SHORT).show();
             break;
+           case R.id.nav_rateus:
+               Toast.makeText(this,"",Toast.LENGTH_SHORT).show();
+               break;
+
        }
 
         //try {
