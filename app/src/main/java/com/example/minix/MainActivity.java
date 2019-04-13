@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         for(int image: images){
             flipperImages(image);
         }
-
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
