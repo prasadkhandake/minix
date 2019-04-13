@@ -9,11 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".homer"></activity>
 
         <meta-data
             android:name="com.google.android.actions"
-            android:resource="@xml/activity_homer" />
+            android:resource="@layout/activity_main" />
 
         <activity
             android:name=".MainActivity"
