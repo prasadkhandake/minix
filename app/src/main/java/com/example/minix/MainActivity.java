@@ -1,5 +1,6 @@
 package com.example.minix;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -61,8 +62,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if(savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new HomeFragment()).commit();
+            Intent i = new Intent(MainActivity.this,MainActivity.class);
+            startActivity(i);
             setTitle("Home");
             navigationView.setCheckedItem(R.id.nav_home);
         }
@@ -83,14 +84,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         v_flipper.setInAnimation(this, android.R.anim.slide_in_left);
         v_flipper.setOutAnimation(this, android.R.anim.slide_out_right);
+
     }
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
        switch (menuItem.getItemId()){
            case R.id.nav_home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new MessageFragment()).commit();
+               Intent i = new Intent(MainActivity.this,MainActivity.class);
+               startActivity(i);
                setTitle("Home");
                break;
            case R.id.nav_profile:
