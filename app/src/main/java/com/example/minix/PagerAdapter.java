@@ -17,7 +17,7 @@ public class PagerAdapter extends android.support.v4.view.PagerAdapter {
     public PagerAdapter(List<Slide> slides, Context context){
         this.slides = slides;
         this.context = context;
-        layoutInflater =
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
     public int getCount() {
