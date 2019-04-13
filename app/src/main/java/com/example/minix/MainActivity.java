@@ -1,26 +1,65 @@
 package com.example.minix;
 
+import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+   // ViewFlipper v_flipper;
+    private List<Slide> slideList = new ArrayList<>();
+    private ViewPager pager;
+    private PagerAdapter adapter;
+    private Timer timer;
+    private int current_position=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        pager = findViewById(R.id.viewPager);
+        prepareSlide();
+        adapter = new PagerAdapter(slideList,this);
+        pager.setAdapter(adapter);
+        createSlideShow();
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+//        int images[] = {R.drawable.img1, R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7};
+//        v_flipper = findViewById(R.id.v_flipper);
+//        // for loop
+//       /* for(int i=0; i< images.length; i++) {
+//            flipperImages(images[i]);
+//        }*/
+//        // another method
+//        for(int image: images){
+//            flipperImages(image);
+//        }
+
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -32,16 +71,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        if(savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new MessageFragment()).commit();
-            setTitle("Home");
-            navigationView.setCheckedItem(R.id.nav_home);
-        }
+//
+//        if(savedInstanceState == null) {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                    new HomeFragment()).commit();
+//            setTitle("Home");
+//            navigationView.setCheckedItem(R.id.nav_home);
+//        }
 
     }
+    //+++++++++++++++++++++++ flipper image +++++++++++++++++++++++++++++
 
+
+
+//    private void flipperImages(int image) {
+//        ImageView imageView = new ImageView(this);
+//        imageView.setBackgroundResource(image);
+//        v_flipper.addView(imageView);
+//        v_flipper.setFlipInterval(3000); // 3 sec
+//        v_flipper.setAutoStart(true);
+//
+//        // animation
+//
+//        v_flipper.setInAnimation(this, android.R.anim.slide_in_left);
+//        v_flipper.setOutAnimation(this, android.R.anim.slide_out_right);
+//    }
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
        switch (menuItem.getItemId()){
@@ -115,6 +170,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    private void prepareSlide()
+    {
+        int[] imageId = {R.drawable.img1, R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7};
+        List<String> titles = Arrays.asList(getResources().getStringArray(R.array.main_title));
+        List<String> subTitles = Arrays.asList(getResources().getStringArray(R.array.sub_title));
+
+        for(int count = 0; count<imageId.length;count++){
+
+            slideList.add(new Slide(imageId[count],titles.get(count),subTitles.get(count)));
+
+        }
+    }
+
     @Override
     public void onBackPressed() {
         if(drawer.isDrawerOpen(GravityCompat.START)){
@@ -123,5 +191,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
 
+    }
+    private void createSlideShow()
+    {
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                if(current_position == slideList.size())
+                    current_position = 0;
+
+               // pager.getCurrentItem(current_position++, true);
+            }
+        };
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(runnable);
+            }
+        },250,2500);
     }
 }
